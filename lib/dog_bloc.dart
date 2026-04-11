@@ -9,11 +9,10 @@ class ApiService {
   final Dio _dio = Dio();
 
   Future<String> getCatImage() async {
-    final response = await _dio.get('https://api.thecatapi.com/v1/images/search');
+    final Response response = await _dio.get('https://api.thecatapi.com/v1/images/search');
     return response.data[0]['url'];
   }
 }
-
 class DogBloc extends Bloc<DogEvent, DogState> {
   final ApiService apiService = ApiService();
 
