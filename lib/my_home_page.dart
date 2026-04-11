@@ -10,13 +10,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late final DogBloc _dogBloc;
+  late DogBloc _dogBloc;
 
   @override
   void initState() {
     super.initState();
-    _dogBloc = DogBloc();
-    _dogBloc.add(GetDogImageEvent());
+    _dogBloc = context.read<DogBloc>();
   }
 
   @override
@@ -44,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
+              
             );
           }
           if (state is LoadedDogImageState) {
@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 40),
                     child: ElevatedButton(
-                      onPressed: () => _dogBloc.add(GetDogImageEvent()),
+                          onPressed: () => _dogBloc.add(GetDogImageEvent()),
                       child: const Text("Cледующий"),
                     ),
                   ),
