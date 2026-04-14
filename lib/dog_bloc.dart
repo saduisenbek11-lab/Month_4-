@@ -7,15 +7,19 @@ part 'dog_state.dart';
 
 class DogBloc extends Bloc<DogEvent, DogState> {
   final ApiService apiService;
+  final List<String> _currentImages = [];
 
   DogBloc({required this.apiService}) : super(DogInitial()) {
     on<GetDogImageEvent>((event, emit) async {
       try {
-        emit(LoadingDogState());
-        final String img = await apiService.getCatImage();
-        emit(LoadedDogImageState(img: img));
+        if (_currentImages.isEmpty) emit(LoadingDogState());
+        final String newImg = await apiService.getCatImage();
+        _currentImages.add(newImg);
+        
+        emit(LoadedDogImageState(images: List.from(_currentImages)));
+        
       } catch (e) {
-        emit(ErrorDogState());
+       emit(ErrorDogState(existingImages: List.from(_currentImages)));
       }
     });
   }

@@ -9,12 +9,17 @@ sealed class DogState extends Equatable {
 
 final class DogInitial extends DogState {}
 final class LoadingDogState extends DogState {}
-final class ErrorDogState extends DogState {}
-
-final class LoadedDogImageState extends DogState {
-  final String img;
-  const LoadedDogImageState({required this.img});
+class ErrorDogState extends DogState {
+  final List<String> existingImages; 
+  const ErrorDogState({this.existingImages = const []});
 
   @override
-  List<Object> get props => [img];
+  List<Object> get props => [existingImages];
+}
+final class LoadedDogImageState extends DogState {
+  final List<String> images;
+  const LoadedDogImageState({required this.images});
+
+@override
+  List<Object> get props => [images];
 }
