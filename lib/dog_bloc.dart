@@ -1,25 +1,23 @@
+import 'package:flutter_application_2/dog_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'api_service.dart';
 
 part 'dog_event.dart';
 part 'dog_state.dart';
-
 class DogBloc extends Bloc<DogEvent, DogState> {
-  final ApiService apiService;
-  final List<String> _currentImages = [];
+  final ApiService apiService = ApiService();
 
-  DogBloc({required this.apiService}) : super(DogInitial()) {
+  DogBloc() : super(DogInitial()) {
     on<GetDogImageEvent>((event, emit) async {
       try {
-        if (_currentImages.isEmpty) emit(LoadingDogState());
-        final String newImg = await apiService.getCatImage();
-        _currentImages.add(newImg);
-        
-        emit(LoadedDogImageState(images: List.from(_currentImages)));
+        emit(LoadingDogState());
+        List<DogModel> listDogs = await apiService.getDogs();
+        emit(LoadedDogImageState(listDogs: listDogs));
         
       } catch (e) {
-       emit(ErrorDogState(existingImages: List.from(_currentImages)));
+        print('Error fetching dogs: $e');
+        emit(const ErrorDogState());
       }
     });
   }
