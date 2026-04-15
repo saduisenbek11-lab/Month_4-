@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/dog_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'my_home_page.dart'; 
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    BlocProvider(create: (context) => DogBloc(),
+    child: const MainApp(),)
+    );
 }//В случае ошибки введите в терминал flutter run -d chrome --web-browser-flag "--disable-web-security"
 
 

@@ -9,6 +9,7 @@ sealed class DogState extends Equatable {
 
 final class DogInitial extends DogState {}
 final class LoadingDogState extends DogState {}
+
 class ErrorDogState extends DogState {
   final List<String> existingImages; 
   const ErrorDogState({this.existingImages = const []});
@@ -17,9 +18,9 @@ class ErrorDogState extends DogState {
   List<Object> get props => [existingImages];
 }
 final class LoadedDogImageState extends DogState {
-  final List<String> images;
-  const LoadedDogImageState({required this.images});
+  final List<DogModel> listDogs;
+  const LoadedDogImageState({required this.listDogs});
 
 @override
-  List<Object> get props => [images];
+  List<Object> get props => [listDogs];
 }
