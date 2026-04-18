@@ -1,25 +1,17 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_application_2/dog_model.dart';
+import 'package:flutter_application_2/weather_model.dart';
+import 'package:flutter_application_2/weather_params.dart';
 
 class ApiService {
-  final Dio _dio = Dio();
+  final Dio _dio = Dio(
+    BaseOptions(baseUrl: "https://api.open-meteo.com/v1/"),
+  );
 
-  Future<List<DogModel>> getDogs() async {
-    try {
+  Future<WeatherModel> getWeather(WeatherParams params) async {
       final Response response = await _dio.get(
-        'https://api.thedogapi.com/v1/images/search?limit=10'
+        'forecast',
+        queryParameters: params.toJson()
       );
-
-      if (response.statusCode == 200) {
-      
-        final List<dynamic> dogListJson = response.data;
-
-        return dogListJson.map((json) => DogModel.fromJson(json)).toList();
-      } else {
-        throw Exception('Ошибка сервера: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Не удалось загрузить собак: $e');
+      return WeatherModel.fromJson(response.data);
     }
   }
-}

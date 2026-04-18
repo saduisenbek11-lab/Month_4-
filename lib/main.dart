@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/dog_bloc.dart';
+import 'package:flutter_application_2/weather_bloc.dart';
+import 'package:flutter_application_2/weather_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'my_home_page.dart'; 
 
 void main() {
   runApp(
-    BlocProvider(create: (context) => DogBloc(),
+    BlocProvider(create: (context) => WeatherBloc(),
     child: const MainApp(),)
     );
 }//В случае ошибки введите в терминал flutter run -d chrome --web-browser-flag "--disable-web-security"
@@ -22,7 +22,7 @@ class MainApp extends StatelessWidget {
         useMaterial3: true,
         colorSchemeSeed: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: const WeatherPage(),
     );
   }
 } 
