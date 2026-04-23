@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_application_2/weather_bloc.dart';
+import 'weather_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'weather_params.dart';
+import 'package:auto_route/auto_route.dart';
+@RoutePage()
 class WeatherPage extends StatefulWidget{
-  const WeatherPage({super.key});
-  
+  const WeatherPage({super.key, required this.weatherParams});
+   final WeatherParams weatherParams;
   @override
   State<WeatherPage> createState() => _WeatherPageState();
 }
@@ -16,11 +18,7 @@ void initState() {
   super.initState();
   _weatherBloc.add(
     LoadedWeatherEvent(
-      params: WeatherParams( 
-        currentWeather: true,
-        latitude: 42.87,
-        longitude: 74.59,
-      ),
+      params: widget.weatherParams,
     ),
   );
 }
@@ -28,7 +26,7 @@ void initState() {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Температура в Бишкеке",style: TextStyle(fontSize: 30,color: Colors.amber[800]),),
+        title: Text("Температура ",style: TextStyle(fontSize: 30,color: Colors.amber[800]),),
       ),
       body: Center(
     child: BlocBuilder<WeatherBloc , WeatherState>(

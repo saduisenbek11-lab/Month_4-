@@ -1,28 +1,49 @@
+/*import 'package:flutter/material.dart';
+import 'package:flutter_application_2/Home/home.dart';
+
+void main() => runApp(MaterialApp(
+      home: Home(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(brightness: Brightness.dark),
+    ));
+*/
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/weather_bloc.dart';
-import 'package:flutter_application_2/weather_page.dart';
+import 'package:flutter_application_2/Setting/Theme/theme_block.dart';
+import 'package:flutter_application_2/Setting/Theme/theme_state.dart';
+import 'package:flutter_application_2/Router/app_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
-void main() {
-  runApp(
-    BlocProvider(create: (context) => WeatherBloc(),
-    child: const MainApp(),)
-    );
-}//В случае ошибки введите в терминал flutter run -d chrome --web-browser-flag "--disable-web-security"
+void main() async {
+   final talker = Talker();
+  runApp( MainApp(talker: talker),);
+}
+ final talker = Talker();
 
+class MainApp extends StatefulWidget {
+ final Talker talker;
+ const MainApp({super.key, required this.talker});
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+ @override
+ State<MainApp> createState() => _MainAppState();
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false, 
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.blue,
-      ),
-      home: const WeatherPage(),
-    );
+class _MainAppState extends State<MainApp> {
+ final _appRouter = AppRouter();
+
+ @override
+ Widget build(BuildContext context) {
+ return BlocProvider(
+  create: (context) => ThemeBlock(),
+  child : BlocBuilder<ThemeBlock,ThemeState>(builder: (context ,state){
+     bool isDark = false;
+  if (state is GetValueThemeState){
+  isDark = state.value;
   }
-} 
+ return MaterialApp.router(routerConfig: _appRouter.config(),theme: isDark ? ThemeData.dark() : ThemeData.light() ,);
+  }
+ ),
+ );
+ }
+}

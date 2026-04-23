@@ -12,4 +12,3 @@ sealed class WeatherEvent extends Equatable {
   List<Object?> get props => [params];
   }
   
-

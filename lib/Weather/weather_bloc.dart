@@ -1,14 +1,14 @@
-import 'package:flutter_application_2/weather_model.dart';
-import 'package:flutter_application_2/weather_params.dart';
+import 'weather_model.dart';
+import 'weather_params.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'api_service.dart';
+import 'api_servise2.dart';
 
 part 'weather_event.dart';
 part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
-  final ApiService apiService = ApiService();
+  final ApiService2 apiService = ApiService2();
   
   WeatherBloc() : super(WeatherInitial()) {
     on<LoadedWeatherEvent>((event, emit) async { 
