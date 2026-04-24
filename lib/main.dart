@@ -1,4 +1,4 @@
-/*import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_application_2/Home/home.dart';
 
 void main() => runApp(MaterialApp(
@@ -6,7 +6,7 @@ void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(brightness: Brightness.dark),
     ));
-*/
+/*
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/Setting/Theme/theme_block.dart';
@@ -46,4 +46,4 @@ class _MainAppState extends State<MainApp> {
  ),
  );
  }
-}
+} */

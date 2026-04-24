@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
   final PageController _controller = PageController();
   int _currentPage = 0;
 
-  final List<Map<String, String>> products = const [
+  final List<Map<String, dynamic>> products = const [
     {
       'title': 'Наушники Beats by Dre',
       'price': '400,000 ₩',
@@ -64,7 +64,6 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        automaticallyImplyLeading: true,
         backgroundColor: Colors.black,
         title: Row(
           children: [
@@ -97,6 +96,7 @@ class _HomeState extends State<Home> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
+              style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 hintText: 'Введите название товара',
                 hintStyle: const TextStyle(color: Colors.white54),
@@ -115,7 +115,7 @@ class _HomeState extends State<Home> {
                 setState(() => _currentPage = page);
               },
               children: [
-                _buildBanner(const Color.fromARGB(255, 255, 0, 0), "Реклама", "здесь могла быть\nваша реклама"),
+                _buildBanner(const Color.fromARGB(255, 255, 0, 0), "Реклама", "здесь могла быть\nваша реклама", imagePath: "images/renem.jpg"),
                 _buildBanner(Colors.green, "Но ее", "здесь нет"),
               ],
             ),
@@ -138,18 +138,16 @@ class _HomeState extends State<Home> {
               }),
             ),
           ),
-          
-          const SizedBox(height: 25),
+          const SizedBox(height: 15),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Категории", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                const Text("Категории", style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
+                const SizedBox(width: 300),
                 GestureDetector(
                   onTap: () {},
-                  child: const Text("Показать все",
-                      style: TextStyle(color: Colors.red, fontSize: 15, )),
+                  child: const Text("Показать все", style: TextStyle(color: Colors.red, fontSize: 15)),
                 ),
               ],
             ),
@@ -157,16 +155,16 @@ class _HomeState extends State<Home> {
           const SizedBox(height: 15),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               children: [
-                _buildCategory('images/cofta.jpg', "Одежда"),
-                const SizedBox(width: 15),
-                _buildCategory('images/house.jpg', "Недвижимость"),
-                const SizedBox(width: 15),
-                _buildCategory('images/phone.jpg', "Электроника"),
-                const SizedBox(width: 15),
-                _buildCategory('images/chto.jpg', "Все для дома"),
+                _buildCategory('images/cofta.png', "Одежда"),
+                const SizedBox(width: 20),
+                _buildCategory('images/house.png', "Недвижимость"),
+                const SizedBox(width: 20),
+                _buildCategory('images/phone.png', "Электроника"),
+                const SizedBox(width: 20),
+                _buildCategory('images/chto.png', "Все для дома"),
               ],
             ),
           ),
@@ -181,13 +179,13 @@ class _HomeState extends State<Home> {
             child: GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
+              itemCount: products.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 16,
                 crossAxisSpacing: 16,
                 childAspectRatio: 0.70,
               ),
-              itemCount: products.length,
               itemBuilder: (context, index) {
                 final item = products[index];
                 return GestureDetector(
@@ -195,21 +193,21 @@ class _HomeState extends State<Home> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => ProductDetailPage(
+                        builder: (context) => ProductDetailPage(
                           title: item['title']!,
                           desc: item['description']!,
+                          star: item['star']!,
                           imageUrl: item['image']!,
                           seller: item['seller']!,
                           price: item['price']!,
-                          star: item['star']!,
                         ),
                       ),
                     );
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1E1E1E), 
-                      borderRadius: BorderRadius.circular(15),
+                      color: const Color(0xFF1E1E1E),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,24 +215,27 @@ class _HomeState extends State<Home> {
                         Expanded(
                           child: Stack(
                             children: [
-                              ClipRRect(
-                                borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                                child: Image.asset(
-                                  item['image']!,
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  errorBuilder: (context, error, stackTrace) => const Center(
-                                    child: Icon(Icons.broken_image, color: Colors.white54, size: 40),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: Image.asset(
+                                    item['image']!,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    errorBuilder: (context, error, stackTrace) => const Center(
+                                      child: Icon(Icons.broken_image, color: Colors.white54),
+                                    ),
                                   ),
                                 ),
                               ),
                               Positioned(
-                                top: 8,
-                                right: 8,
+                                top: 12,
+                                right: 12,
                                 child: Container(
                                   padding: const EdgeInsets.all(4),
-                                  decoration: const BoxDecoration(color: Colors.black, shape: BoxShape.circle),
+                                  decoration: const BoxDecoration(color: Colors.black54, shape: BoxShape.circle),
                                   child: const Icon(Icons.favorite_border, color: Colors.white, size: 18),
                                 ),
                               ),
@@ -242,22 +243,24 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                item['title']!, 
-                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold), 
-                                maxLines: 1, 
+                                item['title']!,
+                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 4),
-                              Text(item['price']!, style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-                              const SizedBox(height: 10),
-                              const Text("Алматы", style: TextStyle(color: Colors.red, fontSize: 13)),
-                              const SizedBox(height: 3),
-                              const Text("Сегодня, 15:30", style: TextStyle(color: Colors.white54, fontSize: 12)),
+                              Text(
+                                item['price']!.split('-')[0],
+                                style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 8),
+                              const Text("Алматы", style: TextStyle(color: Colors.red, fontSize: 12)),
+                              const Text("Сегодня, 15:30", style: TextStyle(color: Colors.white54, fontSize: 11)),
                             ],
                           ),
                         ),
@@ -273,35 +276,59 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
-  Widget _buildBanner(Color color, String title, String subtitle) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
+Widget _buildBanner(Color color, String title, String subtitle, {String? imagePath}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        height: 180, 
         color: color,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
           children: [
-            Text(title, style: const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
-            Text(subtitle, style: const TextStyle(color: Colors.white, fontSize: 16)),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(title, 
+                    style: const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 5),
+                  Text(subtitle, 
+                    style: const TextStyle(color: Colors.white, fontSize: 16)),
+                ],
+              ),
+            ),
+            if (imagePath != null)
+              Positioned(
+                right: 15,  
+                bottom: -20, 
+                top: 15,
+                child: Image.asset(
+                  imagePath,
+                  width: 200, 
+                  height: 200,
+                  fit: BoxFit.cover, 
+                  color: color.withOpacity(0.5), 
+                  colorBlendMode: BlendMode.modulate,
+                ),
+              ),
           ],
         ),
       ),
-    );
-  }
-
+    ),
+  );
+}
   Widget _buildCategory(String img, String label) {
     return Column(
       children: [
         CircleAvatar(
-          radius: 50,
+          radius: 60,
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          backgroundImage: AssetImage(img),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 10),
         Text(label, style: const TextStyle(color: Colors.white, fontSize: 14)),
       ],
     );
@@ -338,7 +365,7 @@ class ProductDetailPage extends StatelessWidget {
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => Container(
                     height: 350,
-                    color: Colors.grey,
+                    color: Colors.transparent,
                     child: const Center(
                       child: Icon(Icons.broken_image, color: Colors.white54, size: 50),
                     ),
@@ -346,13 +373,33 @@ class ProductDetailPage extends StatelessWidget {
                 ),
                 Positioned(
                   top: 40,
-                  left: 20,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.black54,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () => Navigator.pop(context),
-                    ),
+                  left: 10,
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 24),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+                Positioned(
+                  top: 40,
+                  right: 20,
+                  child: Row(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(color: Colors.black, shape: BoxShape.circle),
+                        child: IconButton(
+                          icon: const Icon(Icons.favorite_border, color: Colors.white),
+                          onPressed: () {},
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Container(
+                        decoration: const BoxDecoration(color: Colors.black, shape: BoxShape.circle),
+                        child: IconButton(
+                          icon: const Icon(Icons.download, color: Colors.white),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -364,11 +411,22 @@ class ProductDetailPage extends StatelessWidget {
                 children: [
                   Text(title, style: const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 5),
-                  Text(price, style: const TextStyle(color: Colors.red, fontSize: 22, fontWeight: FontWeight.bold)),
+                  Text(price, style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
+                  const Text("Договорная", style: TextStyle(color: Colors.red, fontSize: 15)),
                   const SizedBox(height: 25),
                   const Text("Описание товара", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 10),
-                  Text(desc, style: const TextStyle(color: Colors.white70, fontSize: 15, height: 1.5)),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1E1E1E),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      desc,
+                      style: const TextStyle(color: Colors.white70, fontSize: 15, height: 1.5),
+                    ),
+                  ),
                   const SizedBox(height: 30),
                   const Text("Продавец", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 15),
@@ -391,7 +449,7 @@ class ProductDetailPage extends StatelessWidget {
                               const SizedBox(height: 5),
                               Row(
                                 children: [
-                                  const Icon(Icons.star, color: Colors.orange, size: 18),
+                                  const Icon(Icons.star, color: Color.fromARGB(255, 255, 81, 0), size: 18),
                                   const SizedBox(width: 5),
                                   Text("Отзывы $star", style: const TextStyle(color: Colors.white70, fontSize: 14)),
                                   const Spacer(),
@@ -429,11 +487,11 @@ class ProductDetailPage extends StatelessWidget {
             TextButton.icon(
               style: TextButton.styleFrom(
                 minimumSize: const Size(double.infinity, 45),
-                foregroundColor: Colors.white54,
+                foregroundColor: Colors.red,
               ),
               onPressed: () {},
+              label: const Text("Пожаловаться", style: TextStyle(fontSize: 14, color: Colors.red)),
               icon: const Icon(Icons.report_problem_outlined, size: 18),
-              label: const Text("Пожаловаться ", style: TextStyle(fontSize: 14, decoration: TextDecoration.underline)),
             ),
           ],
         ),
