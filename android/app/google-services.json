@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "328451426723",
+    "project_id": "weatherapp-f234d",
+    "storage_bucket": "weatherapp-f234d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328451426723:android:7b5ddf79e1017e13bab216",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328451426723-847iqj9l8f1aaq0ud57dqbssiorts8je.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1Z4TmNFs370r6wHTLJgigIKskJQqqbtw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "328451426723-847iqj9l8f1aaq0ud57dqbssiorts8je.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "328451426723-h6uu08s2258nsqfnlqa2mfrk38gsj224.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterApplication2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

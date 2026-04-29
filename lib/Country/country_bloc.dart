@@ -9,11 +9,11 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
   final talker = TalkerFlutter.init(); 
 
   CountryBloc() : super(CountryInitial()) {
-    on<SearchContryEvent>(_searchCountry);   
+    on<SearchCountryEvent>(_searchCountry);   
   }
 
   Future<void> _searchCountry(
-    SearchContryEvent event, 
+    SearchCountryEvent event, 
     Emitter<CountryState> emit,
   ) async { 
     try {

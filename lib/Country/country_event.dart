@@ -4,8 +4,8 @@ import 'package:equatable/equatable.dart';
 sealed class CountryEvent extends Equatable {
   const CountryEvent();
 }
-  final class SearchContryEvent extends CountryEvent{
-const SearchContryEvent ({required this.nameCountry});
+  final class SearchCountryEvent extends CountryEvent{
+const SearchCountryEvent ({required this.nameCountry});
 
    final String nameCountry;
 

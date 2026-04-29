@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  cupertino_icons: ^1.0.2
   flutter_bloc: ^9.1.1
   talker_flutter: ^5.1.16
   talker_bloc_logger: ^5.1.16
@@ -17,6 +18,11 @@ dependencies:
   auto_route: ^11.1.0    
   dio: ^5.4.1
   cached_network_image: ^3.3.1
+  firebase_core: ^4.7.0 
+
+  firebase_auth: ^6.4.0        
+  cloud_firestore: ^6.3.0      
+  firebase_storage: ^13.3.0
 
 dev_dependencies:
   flutter_test:

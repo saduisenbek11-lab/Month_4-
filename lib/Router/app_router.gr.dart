@@ -21,7 +21,7 @@ class SearchContryRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const SearchContryPage();
+      return const SearchCountryPage();
     },
   );
 }
